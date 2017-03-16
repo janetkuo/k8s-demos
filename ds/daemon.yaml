@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  namespace: demo-ds
+  name: daemons-demo
+spec:
+  template:
+    metadata:
+      labels:
+        demo: daemons
+    spec:
+      containers:
+      - name: hostname
+        image: gcr.io/google_containers/serve_hostname:1.1
