@@ -21,4 +21,5 @@ while kubectl get namespace demo-job >/dev/null 2>&1; do
     # do nothing 
     :
 done
+
 run "kubectl create ns demo-job"

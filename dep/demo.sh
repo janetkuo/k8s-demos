@@ -22,7 +22,6 @@ run "kubectl -n=demo-dep apply -f $(relative svc.yaml)"
 desc "Deploy v1.7.9 of our app"
 run "cat $(relative deployment.yaml)"
 run "kubectl -n=demo-dep apply -f $(relative deployment.yaml)"
-#run "kubectl -n=demo-dep run nginx --image=nginx:1.7.9 -l demo=deployment --port 80 --expose"
 
 kubectl create -f curl.yaml >/dev/null 2>&1
 desc "We can access the app through http://nginx"
@@ -53,20 +52,9 @@ run "kubectl -n=demo-dep exec curl -- curl -sI http://nginx"
 
 desc "Update our app to v1.9.1. Previous broken rollout won't block updates."
 run "cat $(relative deployment.yaml) | sed 's/1.7.9/1.9.1/g' | kubectl -n=demo-dep apply -f-"
-#run "kubectl -n=demo-dep set image deployment/demo nginx=nginx:1.9.1"
 
 desc "Look at the pods we just updated"
 run "kubectl -n=demo-dep get pods -l demo=deployment -L version"
 
 desc "Finally, access the app through http://nginx again"
 run "kubectl -n=demo-dep exec curl -- curl -sI http://nginx"
-
-#tmux new -d -s my-session \
-    #"$(dirname $BASH_SOURCE)/split1_control.sh" \; \
-    #split-window -v -p 66 "$(dirname ${BASH_SOURCE})/split1_hit_svc.sh" \; \
-    #split-window -v "$(dirname ${BASH_SOURCE})/split1_watch.sh v1" \; \
-    #split-window -h -d "$(dirname ${BASH_SOURCE})/split1_watch.sh v2" \; \
-    #select-pane -t 0 \; \
-    #attach \;
-
-#https://github.com/kubernetes/contrib/tree/master/micro-demos

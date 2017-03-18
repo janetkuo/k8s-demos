@@ -27,20 +27,16 @@ run "kubectl -n=demo-zoo exec zk-1 -- hostname -f"
 run "kubectl -n=demo-zoo exec zk-2 -- hostname -f"
 
 desc "Read from pod zk-0, the value doesn't exist yet"
-#run "kubectl -n=demo-zoo exec zk-0 /opt/zookeeper/bin/zkCli.sh get /hello | grep hello"
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh get /hello | grep hello"
 
 desc "Write to pod zk-0"
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh create /hello world | grep Created"
-#run "kubectl -n=demo-zoo exec zk-0 /opt/zookeeper/bin/zkCli.sh create /hello world | grep Created"
 
 desc "Read from pod zk-0 now succeeds"
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh get /hello | grep world"
-#run "kubectl -n=demo-zoo exec zk-0 /opt/zookeeper/bin/zkCli.sh get /hello | grep world"
 
 desc "Read from another pod zk-1 also succeeds"
 run "kubectl -n=demo-zoo exec zk-1 zkCli.sh get /hello | grep world"
-#run "kubectl -n=demo-zoo exec zk-1 /opt/zookeeper/bin/zkCli.sh get /hello | grep world"
 
 desc "Take down the ZooKeeper ensemble"
 run "kubectl -n=demo-zoo delete -f $(relative zookeeper.yaml)"
@@ -56,4 +52,3 @@ run "kubectl -n=demo-zoo get pods -l app=zk"
 
 desc "Finally, read from pod zk-2, the data we wrote is preserved"
 run "kubectl -n=demo-zoo exec zk-2 zkCli.sh get /hello | grep world"
-#run "kubectl -n=demo-zoo exec zk-2 /opt/zookeeper/bin/zkCli.sh get /hello | grep world"

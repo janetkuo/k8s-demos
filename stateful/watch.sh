@@ -15,24 +15,5 @@
 
 . $(dirname ${BASH_SOURCE})/../util.sh
 
-#watch "kubectl -n=demo-zoo get pods" "2"
-desc "Watch for Zookeeper pods updates..."
+desc "Watch for Zookeeper pods changes..."
 run "kubectl -n=demo-zoo get pods -l app=zk -w"
-
-#target="$1"
-
-#while true; do
-  #kubectl --namespace=demo-zoo get rs -l demo=deployment \
-      #-o go-template='{{range .items}}{{.metadata.name}} {{.metadata.labels}}{{"\n"}}{{end}}' \
-      #| while read NAME LABELS; do
-    #if echo "$LABELS" | grep -q "$target"; then
-      #trap "exit" INT
-      #while true; do
-        #kubectl --namespace=demo-zoo get rs "$NAME" \
-            #-o go-template="$target Desired: {{.spec.replicas}} Running: {{.status.replicas}}{{\"\n\"}}"
-        #sleep 0.3
-      #done
-      #exit 0
-    #fi
-  #done
-#done

@@ -15,27 +15,5 @@
 
 . $(dirname ${BASH_SOURCE})/../util.sh
 
-#watch "kubectl -n=demo-dep get pods" "2"
-desc "Watch pods updates..."
+desc "Watch for pod updates..."
 run "kubectl -n=demo-dep get pods -l demo=deployment -L version -w"
-
-#kubectl exec curl -- curl -sI http://nginx | grep HTTP
-
-
-#target="$1"
-
-#while true; do
-  #kubectl --namespace=demo-dep get rs -l demo=deployment \
-      #-o go-template='{{range .items}}{{.metadata.name}} {{.metadata.labels}}{{"\n"}}{{end}}' \
-      #| while read NAME LABELS; do
-    #if echo "$LABELS" | grep -q "$target"; then
-      #trap "exit" INT
-      #while true; do
-        #kubectl --namespace=demo-dep get rs "$NAME" \
-            #-o go-template="$target Desired: {{.spec.replicas}} Running: {{.status.replicas}}{{\"\n\"}}"
-        #sleep 0.3
-      #done
-      #exit 0
-    #fi
-  #done
-#done

@@ -21,6 +21,5 @@ while kubectl get namespace demo-dep >/dev/null 2>&1; do
     # do nothing 
     :
 done
-#kubectl apply -f $(relative demo-namespace.yaml)
+
 run "kubectl create ns demo-dep"
-#tmux kill-session -t my-session >/dev/null 2>&1
