@@ -109,12 +109,12 @@ spec:
         - sh
         - -c
         - zkGenConfig.sh && zkServer.sh start-foreground
-        readinessProbe:
-          exec:
-            command:
-            - "zkOk.sh"
-          initialDelaySeconds: 15
-          timeoutSeconds: 5
+        #readinessProbe:
+          #exec:
+            #command:
+            #- "zkOk.sh"
+          #initialDelaySeconds: 15
+          #timeoutSeconds: 5
         volumeMounts:
         - name: datadir
           mountPath: /var/lib/zookeeper

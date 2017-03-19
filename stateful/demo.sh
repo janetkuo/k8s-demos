@@ -21,21 +21,24 @@ run "kubectl -n=demo-zoo apply -f $(relative zookeeper.yaml)"
 desc "Look at the pods we just created"
 run "kubectl -n=demo-zoo get pods -l app=zk"
 
-desc "Verify that each pod has a unique network address"
+desc "Verify that each pod has a stable and unique network identity"
 run "kubectl -n=demo-zoo exec zk-0 -- hostname -f"
 run "kubectl -n=demo-zoo exec zk-1 -- hostname -f"
 run "kubectl -n=demo-zoo exec zk-2 -- hostname -f"
 
-desc "Read from pod zk-0, the value doesn't exist yet"
-run "kubectl -n=demo-zoo exec zk-0 zkCli.sh get /hello | grep hello"
+desc "From pod zk-0, list existing directories"
+run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep '\[zookeeper'"
 
 desc "Write to pod zk-0"
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh create /hello world | grep Created"
 
-desc "Read from pod zk-0 now succeeds"
+desc "From pod zk-0, list existing directories again"
+run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep hello"
+
+desc "Read data in /hello from pod zk-0 "
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh get /hello | grep world"
 
-desc "Read from another pod zk-1 also succeeds"
+desc "Read data in /hello from another pod zk-1"
 run "kubectl -n=demo-zoo exec zk-1 zkCli.sh get /hello | grep world"
 
 desc "Take down the ZooKeeper ensemble"
@@ -50,5 +53,5 @@ run "kubectl -n=demo-zoo apply -f $(relative zookeeper.yaml)"
 desc "Make sure the pods are recreated"
 run "kubectl -n=demo-zoo get pods -l app=zk"
 
-desc "Finally, read from pod zk-2, the data we wrote is preserved"
+desc "Finally, read from pod zk-2, the data we wrote to /hello is preserved"
 run "kubectl -n=demo-zoo exec zk-2 zkCli.sh get /hello | grep world"
