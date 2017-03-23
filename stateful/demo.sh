@@ -27,7 +27,7 @@ run "kubectl -n=demo-zoo exec zk-1 -- hostname -f"
 run "kubectl -n=demo-zoo exec zk-2 -- hostname -f"
 
 desc "From pod zk-0, list existing directories"
-run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep '\[zookeeper'"
+run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep 'zookeeper.*\]'"
 
 desc "Write to pod zk-0"
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh create /hello world | grep Created"

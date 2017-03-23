@@ -2,12 +2,12 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   namespace: demo-ds
-  name: daemons-demo
+  name: red
 spec:
   template:
     metadata:
       labels:
-        demo: daemons
+        demo: red
     spec:
       nodeSelector:
         color: red

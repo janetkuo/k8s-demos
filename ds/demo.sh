@@ -30,14 +30,14 @@ run "kubectl get nodes"
 desc "Check that there's one pod created on each node"
 run "kubectl -n=demo-ds get pods -o wide"
 
-desc "Update the daemon to run on nodes with red labels only"
+desc "Create another daemon that runs on nodes with red labels only"
 run "cat $(relative daemon-red.yaml)"
 run "kubectl -n=demo-ds apply -f $(relative daemon-red.yaml)"
 
 desc "No color labels on nodes"
 run "kubectl get nodes -L color"
 
-desc "Check that there's no pods"
+desc "Check that there's no pods from the red daemon"
 run "kubectl -n=demo-ds get pods -o wide"
 
 RANDOM_NODE=$(kubectl get node | tail -1 | cut -f1 -d' ')
@@ -47,7 +47,7 @@ run "kubectl label node $RANDOM_NODE color=red"
 desc "Check nodes color label"
 run "kubectl get nodes -L color"
 
-desc "Finally, check that there's one pod running on red node"
+desc "Finally, check that there's one pod from red daemon running on red node"
 run "kubectl -n=demo-ds get pods -o wide"
 
 # Clean up node color labels
