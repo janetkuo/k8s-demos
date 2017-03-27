@@ -15,5 +15,4 @@
 
 . $(dirname ${BASH_SOURCE})/../util.sh
 
-desc "Watch for pod updates..."
-run "kubectl -n=demo-dep get pods -l demo=deployment -L version -w"
+watch "kubectl -n=demo-dep get pods -l demo=deployment -L version" "2"

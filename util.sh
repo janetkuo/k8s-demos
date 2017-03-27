@@ -61,12 +61,14 @@ function run() {
     return $r
 }
 
+# watch output of cmd $1 every $2 seconds
 function watch() {
-while :; 
-  do 
+while :; do
+  output="$($1)"
   clear
-  #date
-  $1
+  date
+  echo "Every $2s: $1"
+  echo "${output}"
   sleep $2
 done
 }

@@ -15,5 +15,4 @@
 
 . $(dirname ${BASH_SOURCE})/../util.sh
 
-desc "Watch for Zookeeper pods changes..."
-run "kubectl -n=demo-zoo get pods -l app=zk -w"
+watch "kubectl -n=demo-zoo get pods -l app=zk" "2"
