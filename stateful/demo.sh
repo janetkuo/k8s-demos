@@ -29,29 +29,24 @@ run "kubectl -n=demo-zoo exec zk-2 -- hostname -f"
 desc "From pod zk-0, list existing directories"
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep 'zookeeper.*\]'"
 
-desc "Write to pod zk-0"
+desc "Write to pod zk-0: create '/hello' with data 'world'"
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh create /hello world | grep Created"
 
 desc "From pod zk-0, list existing directories again"
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep hello"
 
-desc "Read data in /hello from pod zk-0 "
+desc "Read data in '/hello' from pod zk-0 "
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh get /hello | grep world"
 
-desc "Read data in /hello from another pod zk-1"
+desc "Read data in '/hello' from another pod zk-1"
 run "kubectl -n=demo-zoo exec zk-1 zkCli.sh get /hello | grep world"
 
-desc "Take down the ZooKeeper ensemble"
-run "kubectl -n=demo-zoo delete -f $(relative zookeeper.yaml)"
-
-desc "Make sure the pods are terminating or gone"
-run "kubectl -n=demo-zoo get pods -l app=zk"
-
-desc "Redeploy the ZooKeeper ensemble"
-run "kubectl -n=demo-zoo apply -f $(relative zookeeper.yaml)"
+LAST_PET=$(kubectl get pods -n=demo-zoo | tail -1 | cut -f1 -d' ')
+desc "Kill the last pod $LAST_PET"
+run "kubectl -n=demo-zoo delete pod $LAST_PET"
 
 desc "Make sure the pods are recreated"
 run "kubectl -n=demo-zoo get pods -l app=zk"
 
-desc "Finally, read from pod zk-2, the data we wrote to /hello is preserved"
+desc "Finally, read from pod zk-2, the data we wrote to '/hello' is preserved"
 run "kubectl -n=demo-zoo exec zk-2 zkCli.sh get /hello | grep world"
