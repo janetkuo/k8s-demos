@@ -26,14 +26,14 @@ run "kubectl -n=demo-zoo exec zk-0 -- hostname -f"
 run "kubectl -n=demo-zoo exec zk-1 -- hostname -f"
 run "kubectl -n=demo-zoo exec zk-2 -- hostname -f"
 
-desc "From pod zk-0, list existing directories"
-run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep 'zookeeper.*\]'"
+#desc "From pod zk-0, list existing directories"
+#run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep 'zookeeper.*\]'"
 
 desc "Write to pod zk-0: create '/hello' with data 'world'"
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh create /hello world | grep Created"
 
-desc "From pod zk-0, list existing directories again"
-run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep hello"
+#desc "From pod zk-0, list existing directories again"
+#run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep hello"
 
 desc "Read data in '/hello' from pod zk-0 "
 run "kubectl -n=demo-zoo exec zk-0 zkCli.sh get /hello | grep world"

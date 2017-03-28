@@ -22,9 +22,10 @@ run "kubectl -n=demo-job apply -f $(relative job.yaml)"
 #desc "See what we did"
 #run "kubectl --namespace=demo-job describe job jobs-demo"
 
-desc "See the job has at most 3 pods running in parallel"
+#desc "See the job has at most 3 pods running in parallel"
 while [ "$(kubectl -n=demo-job get job jobs-demo -o go-template='{{.status.succeeded}}')" != 10 ]; do
-	run "kubectl -n=demo-job get pods,jobs -l demo=jobs"
+	#run "kubectl -n=demo-job get pods,jobs -l demo=jobs"
+    :
 done
 
 desc "Now the job is completed"
