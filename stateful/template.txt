@@ -1,0 +1,2 @@
+NAME    STATUS  CPU
+metadata.name   status.phase    spec.containers[0].resources.requests.cpu

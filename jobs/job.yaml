@@ -1,12 +1,9 @@
-apiVersion: extensions/v1beta1
+apiVersion: batch/v1
 kind: Job
 metadata:
   name: jobs-demo
   namespace: demo-job
 spec:
-  selector:
-    matchLabels:
-      demo: jobs
   parallelism: 3
   completions: 10
   template:

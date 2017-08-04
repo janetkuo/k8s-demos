@@ -35,4 +35,4 @@ desc "No running pods"
 run "kubectl -n=demo-job get pods -l demo=jobs"
 
 desc "Finally, view all terminated pods"
-run "kubectl -n=demo-job get pods --show-all -l demo=jobs --sort-by='{.status.phase}'"
+run "kubectl -n=demo-job get pods --show-all -l demo=jobs"

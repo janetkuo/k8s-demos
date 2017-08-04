@@ -16,3 +16,4 @@
 . $(dirname ${BASH_SOURCE})/../util.sh
 
 watch "kubectl -n=demo-zoo get pods -l app=zk" "2"
+#watch "kubectl -n=demo-zoo get pods -l app=zk -o=custom-columns-file=template.txt" "2"

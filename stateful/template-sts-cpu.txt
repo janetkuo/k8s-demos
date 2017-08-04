@@ -1,0 +1,2 @@
+NAME    DESIRED  CURRENT  CPU  STRATEGY  PARTITION
+metadata.name   spec.replicas   status.replicas    spec.updateStrategy.type   spec.updateStrategy.rollingUpdate.partition

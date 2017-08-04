@@ -38,6 +38,13 @@ metadata:
 spec:
   serviceName: zk-headless
   replicas: 3
+  # Trigger a rolling update upon template updates
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      partition: 1
+  # Launch or terminate pods in parallel
+  podManagementPolicy: Parallel
   template:
     metadata:
       labels:

@@ -15,6 +15,8 @@
 
 . $(dirname ${BASH_SOURCE})/../util.sh
 
+kubectl create -f curl.yaml >/dev/null 2>&1
+
 desc "Create a service that fronts any version of this demo"
 run "cat $(relative svc.yaml)"
 run "kubectl -n=demo-dep apply -f $(relative svc.yaml)"
@@ -23,7 +25,6 @@ desc "Deploy v1.7.9 of our app"
 run "cat $(relative deployment.yaml)"
 run "kubectl -n=demo-dep apply -f $(relative deployment.yaml)"
 
-kubectl create -f curl.yaml >/dev/null 2>&1
 desc "We can access the app through http://nginx"
 run "kubectl -n=demo-dep exec curl -- curl -sI http://nginx"
 

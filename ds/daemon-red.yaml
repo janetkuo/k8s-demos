@@ -12,5 +12,5 @@ spec:
       nodeSelector:
         color: red
       containers:
-      - name: hostname
-        image: gcr.io/google_containers/serve_hostname:1.1
+      - name: node-exporter
+        image: prom/node-exporter:v0.14.0
