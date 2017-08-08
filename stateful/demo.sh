@@ -26,8 +26,11 @@ run "kubectl -n=demo-zoo exec zk-0 -- hostname -f"
 run "kubectl -n=demo-zoo exec zk-1 -- hostname -f"
 run "kubectl -n=demo-zoo exec zk-2 -- hostname -f"
 
+desc "ZooKeeper requests for dynamically provisioned storage"
+run "kubectl -n=demo-zoo get statefulset -o yaml | grep volumeClaimTemplates: -A 11"
+
 desc "Verify that each pod has a stable and unique storage"
-run "kubectl -n-demo-zoo get pv"
+run "kubectl -n=demo-zoo get pvc"
 
 #desc "From pod zk-0, list existing directories"
 #run "kubectl -n=demo-zoo exec zk-0 zkCli.sh ls / | grep 'zookeeper.*\]'"
