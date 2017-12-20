@@ -16,7 +16,7 @@
 . $(dirname ${BASH_SOURCE})/util.sh
 
 desc "Reset namespaces from all demos, this could take a while..."
-kubectl delete ns demo-dep demo-zoo demo-ds demo-job >/dev/null 2>&1
+kubectl delete ns demo-dep demo-zoo demo-ds demo-job demo-init >/dev/null 2>&1
 while kubectl get ns demo-dep >/dev/null 2>&1; do
     # do nothing 
     :
@@ -30,8 +30,12 @@ done
 while kubectl get ns demo-job >/dev/null 2>&1; do
     :
 done
+while kubectl get ns demo-init >/dev/null 2>&1; do
+    :
+done
 
 kubectl create ns demo-dep
 kubectl create ns demo-zoo
 kubectl create ns demo-ds
 kubectl create ns demo-job
+kubectl create ns demo-init
